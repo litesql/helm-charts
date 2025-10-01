@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "ha.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    {{- include "ha.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "ha.fullname" . }}-headless
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}          
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 5432
+              name: pg-wire
+            - containerPort: 4222
+              name: nats
+            - containerPort: 6222
+              name: nats-cluster
+          env:
+            - name: HA_ARGS
+              value: {{ .Values.dsn }}
+            - name: HA_CONCURRENT_QUERIES
+              value: {{ .Values.concurrent_queries | quote }}
+            - name: HA_NATS_CONFIG
+              value: "/etc/ha/nats.conf"
+            - name: HA_NATS_LOGS
+              value: {{ .Values.nats.logs | quote }}
+            - name: HA_REPLICAS
+              value: {{ .Values.stream.replicas | quote }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/ha
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config-volume
+          configMap:
+            name: ha-config     
+             
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.storage.className }}
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}
