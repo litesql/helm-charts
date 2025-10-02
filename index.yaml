@@ -3,6 +3,16 @@ entries:
   ha:
   - apiVersion: v2
     appVersion: 0.0.13
+    created: "2025-10-02T21:07:30.14219584Z"
+    description: A Helm chart for Kubernetes
+    digest: 427bf5fccff4d13238fe9262e1c56212b5ed305d40cea270ab88bd2dede85a80
+    name: ha
+    type: application
+    urls:
+    - https://github.com/litesql/helm-charts/releases/download/ha-0.1.2/ha-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.0.13
     created: "2025-10-01T23:13:25.853295018Z"
     description: A Helm chart for Kubernetes
     digest: b485d9f2083230d6b316a4c6745999eb4abe2c4db1f25e012ef5bcf6743b166c
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://github.com/litesql/helm-charts/releases/download/ha-0.1.0/ha-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-01T23:13:25.853307862Z"
+generated: "2025-10-02T21:07:30.142208564Z"
