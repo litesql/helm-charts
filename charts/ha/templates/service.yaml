@@ -8,17 +8,20 @@ metadata:
 spec:
   clusterIP: None
   ports:
-    - port: 8080      
+    - port: 8080
       protocol: TCP
       name: http
+{{- if .Values.nats.enabled}}
     - port: 4222      
       protocol: TCP
       name: nats
     - port: 6222
       protocol: TCP
       name: nats-cluster
+{{- end}}{{if .Values.pgwire.enabled}}
     - port: 5432
       protocol: TCP
       name: pg-wire
+{{- end}}      
   selector:
     app: {{ .Chart.Name }}

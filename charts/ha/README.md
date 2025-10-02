@@ -29,11 +29,24 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ## Configuration
 
-| Parameter             | Description                  | Default                      |
-|-----------------------|------------------------------|------------------------------|
-| `replicaCount`        | Number of nodes              | `3`                          |
-| `storage.size`        | Storage size                 | `10Gi`                       |
-| `storage.className`   | Storage class name           | `standard`                   |
-| `stream.replicas`     | Number of stream replicas    | `1`                          |
-| `nats.logs`           | Show embedded NATS logs      | `false`                      |
-| `nats.config`         | Override default NATS config | see values.yaml              |
+| Parameter               | Description                         | Default                      |
+|-------------------------|-------------------------------------|------------------------------|
+| `db.dsn`                | DataSource Name                     | `file:/data/ha.db?_journal=WAL&_timeout=5000&_sync=NORMAL` |
+| `db.concurrent_queries` | Number of concurrent queries        | `50`                         |
+| `db.extensions`         | List of SQLite extensions to load   | ``                           |  
+| `nats.enabled`          | Enable/disable embedded NATS server | `true`                       |
+| `nats.logs`             | Show embedded NATS logs             | `false`                      |
+| `nats.user`             | Embedded NATS username              | ``                           |
+| `nats.pass`             | Embedded NATS password              | ``                           |
+| `nats.config`           | Override default NATS config        | see values.yaml              |
+| `pgwire.enabled`        | Enable/disable Postgres Wire server | `true`                       |
+| `pgwire.user`           | PostgreSQL Wire Porocol username    | `ha`                         |
+| `pgwire.pass`           | PostgreSQL Wire Porocol password    | `ha`                         |
+| `replicaCount`          | Number of instances                 | `3`                          |
+| `relication.max_age`    | Replication stream max age          | `24h`                        |
+| `relication.stream`     | Replication stream name             | `ha_relication`              |
+| `relication.timeout`    | Replication publisher timeout       | `15s`                        |
+| `relication.url`        | URL to connect to external NATS for replication | ``               |
+| `storage.size`          | Storage size                        | `10Gi`                       |
+| `storage.className`     | Storage class name                  | `standard`                   |
+| `stream.replicas`       | Number of stream replicas           | `1`                          |

@@ -23,33 +23,84 @@ spec:
           ports:
             - containerPort: 8080
               name: http
+              {{if .Values.pgwire.enabled}}
             - containerPort: 5432
               name: pg-wire
+              {{end}}
+              {{if .Values.nats.enabled}}
             - containerPort: 4222
               name: nats
             - containerPort: 6222
               name: nats-cluster
+              {{end}}
           env:
             - name: HA_ARGS
-              value: {{ .Values.dsn }}
+              value: {{ .Values.db.dsn }}
             - name: HA_CONCURRENT_QUERIES
-              value: {{ .Values.concurrent_queries | quote }}
+              value: {{ .Values.db.concurrent_queries | quote }}
+            - name: HA_EXTENSIONS
+              value: {{ .Values.db.extensions }}
+          {{- if .Values.pgwire.enabled }}
+            - name: HA_PG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ha.fullname" . }}-env-secret
+                  key: pg_user
+            - name: HA_PG_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ha.fullname" . }}-env-secret
+                  key: pg_pass
+          {{else}}
+            - name: HA_PG_PORT
+              value: "0"
+          {{- end}}
+          {{- if .Values.nats.enabled }}
+          {{- if .Values.nats.config}}
             - name: HA_NATS_CONFIG
               value: "/etc/ha/nats.conf"
+          {{- end}}
+            - name: HA_NATS_STORE_DIR
+              value: "/data/nats"
             - name: HA_NATS_LOGS
               value: {{ .Values.nats.logs | quote }}
+            - name: HA_NATS_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ha.fullname" . }}-env-secret
+                  key: nats_user
+            - name: HA_NATS_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ha.fullname" . }}-env-secret
+                  key: nats_pass
+          {{else}}
+            - name: HA_NATS_PORT
+              value: "0"
+          {{- end}}
             - name: HA_REPLICAS
               value: {{ .Values.stream.replicas | quote }}
+            - name: HA_REPLICATION_MAX_AGE
+              value: {{ .Values.replication.max_age }}
+            - name: HA_REPLICATION_POLICY
+              value: {{ .Values.replication.policy }}
+            - name: HA_REPLICATION_STREAM
+              value: {{ .Values.replication.stream }}
+            - name: HA_REPLICATION_TIMEOUT
+              value: {{ .Values.replication.timeout }}
+            - name: HA_REPLICATION_URL
+              value: {{ .Values.replication.url }} 
           volumeMounts:
-            - name: config-volume
-              mountPath: /etc/ha
             - name: data
               mountPath: /data
+          {{- if .Values.nats.enabled }}
+            - name: config-volume
+              mountPath: /etc/ha                    
       volumes:
         - name: config-volume
           configMap:
             name: ha-config     
-             
+          {{- end}}   
   volumeClaimTemplates:
     - metadata:
         name: data

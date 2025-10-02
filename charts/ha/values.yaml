@@ -152,8 +152,10 @@ tolerations: []
 
 affinity: {}
 
-dsn: "file:/data/ha.db?_journal=WAL&_timeout=5000&_sync=NORMAL"
-concurrent_queries: 50
+db:
+  dsn: "file:/data/ha.db?_journal=WAL&_timeout=5000&_sync=NORMAL"
+  concurrent_queries: 50
+  extensions: "" #comma-separated extensions path
 
 storage:
   size: 10Gi
@@ -162,8 +164,25 @@ storage:
 stream:
   replicas: 1
 
+replication:
+  url: "" # defaults to embedded nats server
+  stream: "ha_replication"
+  max_age: "24h"
+  timeout: "15s"
+  policy: "all" # replication subscriber delivery policy (all|last|new|by_start_sequence=X|by_start_time=x)
+
+# Postgresql Wire Protocol server configuration
+pgwire:
+  enabled: true
+  user: ha
+  pass: ha
+
+# Embedded NATS server configuration
 nats:
+  enabled: true
   logs: false
+  user: ""
+  pass: ""
   config: |
     ## configuration file for nats-server
     ## https://docs.nats.io/nats-server/configuration
