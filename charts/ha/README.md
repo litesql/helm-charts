@@ -44,7 +44,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `pgwire.pass`           | PostgreSQL Wire Porocol password    | `ha`                         |
 | `replicaCount`          | Number of instances                 | `3`                          |
 | `relication.max_age`    | Replication stream max age          | `24h`                        |
-| `relication.stream`     | Replication stream name             | `ha_relication`              |
+| `relication.stream`     | Replication stream name             | `ha_replication`              |
 | `relication.timeout`    | Replication publisher timeout       | `15s`                        |
 | `relication.url`        | URL to connect to external NATS for replication | ``               |
 | `storage.size`          | Storage size                        | `10Gi`                       |
