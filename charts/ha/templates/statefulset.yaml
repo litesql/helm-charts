@@ -40,7 +40,17 @@ spec:
               value: {{ .Values.db.concurrent_queries | quote }}
             - name: HA_EXTENSIONS
               value: {{ .Values.db.extensions }}
+            - name: HA_LOG_LEVEL
+              value: {{ .Values.log_level }}
           {{- if .Values.pgwire.enabled }}
+          {{- if .Values.pgwire.cert }}
+            - name: HA_PG_CERT
+              value: "/etc/ha/pgwire.cert"
+          {{- end}}
+          {{- if .Values.pgwire.key }}
+            - name: HA_PG_KEY
+              value: "/etc/ha/pgwire.key"
+          {{- end}}
             - name: HA_PG_USER
               valueFrom:
                 secretKeyRef:
@@ -93,14 +103,12 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
-          {{- if .Values.nats.enabled }}
             - name: config-volume
               mountPath: /etc/ha                    
       volumes:
         - name: config-volume
           configMap:
-            name: ha-config     
-          {{- end}}   
+            name: ha-config
   volumeClaimTemplates:
     - metadata:
         name: data

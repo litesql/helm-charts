@@ -1,9 +1,17 @@
-{{- if .Values.nats.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: ha-config  
 data:
+{{- if .Values.nats.enabled -}}
   nats.conf: |  
     {{- tpl .Values.nats.config . | indent 4 }}
+{{- end }}
+{{- if .Values.pgwire.cert -}}
+  pgwire.cert: |
+    {{- .Values.pgwire.cert | indent 4 }}
+{{- end }}
+{{- if .Values.pgwire.key -}}
+  pgwire.key: |
+    {{- .Values.pgwire.key | indent 4 }}
 {{- end }}

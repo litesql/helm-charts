@@ -152,6 +152,8 @@ tolerations: []
 
 affinity: {}
 
+log_level: info
+
 db:
   dsn: "file:/data/ha.db?_journal=WAL&_timeout=5000&_sync=NORMAL"
   concurrent_queries: 50
@@ -176,6 +178,8 @@ pgwire:
   enabled: true
   user: ha
   pass: ha
+  cert: ""
+  key: ""
 
 # Embedded NATS server configuration
 nats:
