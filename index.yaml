@@ -41,4 +41,15 @@ entries:
     urls:
     - https://github.com/litesql/helm-charts/releases/download/ha-0.1.0/ha-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-08T23:41:27.62036373Z"
+  pocketbase-ha:
+  - apiVersion: v2
+    appVersion: 0.0.6
+    created: "2025-10-27T23:29:41.518708212Z"
+    description: A Helm chart for Kubernetes
+    digest: d023ab4d2cdbbc735af3fde431259f6659bba3ac02a561ab64909cbaeb4b4b5f
+    name: pocketbase-ha
+    type: application
+    urls:
+    - https://github.com/litesql/helm-charts/releases/download/pocketbase-ha-0.0.1/pocketbase-ha-0.0.1.tgz
+    version: 0.0.1
+generated: "2025-10-27T23:29:41.518726075Z"
