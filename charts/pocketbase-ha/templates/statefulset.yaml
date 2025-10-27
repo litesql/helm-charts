@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "ha.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+    {{- include "ha.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "ha.fullname" . }}-headless
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}          
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8090
+              name: http
+              {{if .Values.nats.enabled}}
+            - containerPort: 4222
+              name: nats
+            - containerPort: 6222
+              name: nats-cluster
+              {{end}}
+          env:
+            - name: PB_NAME
+              value: "{{ .Values.name }}"              
+          {{- if .Values.nats.config}}
+            - name: PB_NATS_CONFIG
+              value: "/etc/ha/nats.conf"
+          {{- end}}
+            - name: PB_NATS_STORE_DIR
+              value: "/app/pb_data/nats"
+            - name: PB_NATS_PORT
+              value: {{ .Values.nats.port  | quote}}
+            - name: PB_REPLICATION_URL
+              value: {{ .Values.replication.url }}
+            - name: PB_REPLICATION_STREAM
+              value: {{ .Values.nats.stream }}
+            - name: PB_REPLICAS
+              value: {{ .Values.stream.replicas | quote }}             
+          volumeMounts:
+            - name: data
+              mountPath: /app/pb_data
+            - name: config-volume
+              mountPath: /etc/ha                    
+      volumes:
+        - name: config-volume
+          configMap:
+            name: ha-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.storage.className }}
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}

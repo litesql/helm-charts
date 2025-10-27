@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ha.fullname" . }}-headless
+  labels:
+    app: {{ .Chart.Name }}
+    {{- include "ha.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  ports:
+    - port: 8090
+      protocol: TCP
+      name: http
+{{- if .Values.nats.enabled}}
+    - port: 4222      
+      protocol: TCP
+      name: nats
+    - port: 6222
+      protocol: TCP
+      name: nats-cluster
+{{- end}}
+  selector:
+    app: {{ .Chart.Name }}

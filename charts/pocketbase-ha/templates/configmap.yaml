@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ha-config  
+data:
+{{- if .Values.nats.enabled -}}
+  nats.conf: |  
+    {{- tpl .Values.nats.config . | indent 4 }}
+{{- end }}
