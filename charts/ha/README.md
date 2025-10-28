@@ -1,6 +1,6 @@
 # Ha Helm Chart
 
-Highly available leaderless SQLite cluster powered by embedded NATS JetStream server
+[HA](http://github.com/litesql/ha) is an highly available leaderless SQLite cluster powered by embedded NATS JetStream server
 
 ## Features
 

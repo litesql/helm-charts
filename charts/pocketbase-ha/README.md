@@ -1,6 +1,6 @@
 # PocketBase HA Helm Chart
 
-Highly available leaderless PocketBase cluster powered by go-ha database/sql driver
+[PocketBase HA](http://github.com/litesql/pocketbase-ha) is an highly available leaderless PocketBase cluster powered by go-ha database/sql driver.
 
 ## Features
 
