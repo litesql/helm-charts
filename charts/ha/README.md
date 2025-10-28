@@ -1,5 +1,17 @@
 # Ha Helm Chart
 
+Highly available leaderless SQLite cluster powered by embedded NATS JetStream server
+
+## Features
+
+🔌 Connect via HTTP API or PostgreSQL Wire Protocol
+🔁 Replicate data using embedded or external NATS server
+📝 Create live local read/write replicas with go-ha database/sql driver
+📚 Create live local read replicas with ha-sync SQLite extension
+🔄 Supports Change Data Capture (CDC)
+⚙️ Configure custom strategies for resolving replication data conflicts
+📖 Full documentation: https://litesql.github.io/ha/
+
 ## Get Repo Info
 
 ```console

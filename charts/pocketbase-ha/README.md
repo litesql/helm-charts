@@ -1,5 +1,13 @@
 # PocketBase HA Helm Chart
 
+Highly available leaderless PocketBase cluster powered by go-ha database/sql driver
+
+## Features
+
+- High Availability: Run multiple PocketBase instances in a leaderless cluster.
+- Replication: Synchronize data across nodes using NATS.
+- Embedded or External NATS: Choose between an embedded NATS server or an external one for replication.
+
 ## Get Repo Info
 
 ```console
