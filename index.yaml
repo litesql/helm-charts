@@ -3,6 +3,17 @@ entries:
   ha:
   - apiVersion: v2
     appVersion: 0.0.14
+    created: "2025-10-28T00:14:07.354991254Z"
+    description: HA, a highly available leaderless SQLite cluster powered by embedded
+      NATS JetStream server
+    digest: 21f30272f33d90bd03f48fcd07739fda8b11ae9ee7dba9bc0fbb50720b0978ee
+    name: ha
+    type: application
+    urls:
+    - https://github.com/litesql/helm-charts/releases/download/ha-0.1.4/ha-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 0.0.14
     created: "2025-10-08T23:41:27.620343021Z"
     description: A Helm chart for Kubernetes
     digest: 15cfcca2e42d4a49d3e503dcbddd2373b54e5511fb21df2b73dd6165802e58e6
@@ -44,6 +55,17 @@ entries:
   pocketbase-ha:
   - apiVersion: v2
     appVersion: 0.0.6
+    created: "2025-10-28T00:14:07.549604782Z"
+    description: A highly available leaderless PocketBase cluster powered by go-ha
+      database/sql driver
+    digest: 3390dfafa1b968ee9d34391ba042e44bfa9d19e74497b3c9e44fbd993e9db1b4
+    name: pocketbase-ha
+    type: application
+    urls:
+    - https://github.com/litesql/helm-charts/releases/download/pocketbase-ha-0.0.3/pocketbase-ha-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 0.0.6
     created: "2025-10-28T00:04:23.071608082Z"
     description: A Helm chart for Kubernetes
     digest: 95437a6db28110020a1a924d57360255c5c7e1bcd86192a72bbfce78be8e39b4
@@ -62,4 +84,4 @@ entries:
     urls:
     - https://github.com/litesql/helm-charts/releases/download/pocketbase-ha-0.0.1/pocketbase-ha-0.0.1.tgz
     version: 0.0.1
-generated: "2025-10-28T00:04:23.071627568Z"
+generated: "2025-10-28T00:14:07.549663792Z"
