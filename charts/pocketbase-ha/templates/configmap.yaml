@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: ha-config  
 data:
-{{- if .Values.nats.enabled -}}
+{{- if .Values.nats.config -}}
   nats.conf: |  
     {{- tpl .Values.nats.config . | indent 4 }}
 {{- end }}
