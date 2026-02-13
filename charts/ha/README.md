@@ -4,7 +4,7 @@
 
 ## Features
 
-- 🔌 Connect via HTTP API or PostgreSQL Wire Protocol
+- 🔌 Connect via HTTP API, PostgreSQL Wire Protocol, or MySQL Wire Protocol
 - 🔁 Replicate data using embedded or external NATS server
 - 📝 Create live local read/write replicas with go-ha database/sql driver
 - 📚 Create live local read replicas with ha-sync SQLite extension
@@ -57,6 +57,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | `pgwire.pass`           | PostgreSQL Wire Porocol password    | `ha`                         |
 | `pgwire.cert`           | PostgreSQL Wire Porocol certificate | ``                           |
 | `pgwire.key`           | PostgreSQL Wire Porocol certificate key | ``                        |
+| `mysql.enabled`         | Enable/disable MySQL Wire server    | `true`                       |
+| `mysql.port`            | MySQL Wire Protocol port            | `3306`                       |
+| `mysql.user`            | MySQL Wire Protocol username        | `ha`                         |
+| `mysql.pass`            | MySQL Wire Protocol password        | `ha`                         |
 | `replicaCount`          | Number of instances                 | `3`                          |
 | `relication.max_age`    | Replication stream max age          | `24h`                        |
 | `relication.stream`     | Replication stream name             | `ha_replication`              |
