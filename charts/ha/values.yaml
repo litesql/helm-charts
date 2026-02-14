@@ -181,6 +181,13 @@ pgwire:
   cert: ""
   key: ""
 
+# MySQL Wire Protocol server configuration
+mysql:
+  enabled: true
+  port: 3306
+  user: ha
+  pass: ha
+
 # Embedded NATS server configuration
 nats:
   enabled: true
@@ -188,23 +195,11 @@ nats:
   user: ""
   pass: ""
   config: |
-    ## configuration file for nats-server
-    ## https://docs.nats.io/nats-server/configuration
-    listen=4222
-    
-    accounts {
-      $SYS {
-        users = [
-          {
-            user: "admin",
-            pass: "$2a$11$DRh4C0KNbNnD8K/hb/buWe1zPxEHrLEiDmuq1Mi0rRJiH/W25Qidm"
-          }
-        ]
-      }
-    }
+    # NATS Server Configuration
+    listen: 0.0.0.0:4222
 
     jetstream {
-      store_dir=/data/nats
+      store_dir: "/data/nats"
     }
     {{if gt (int .Values.replicaCount) 1}}
     cluster {

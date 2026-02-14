@@ -22,6 +22,10 @@ spec:
     - port: 5432
       protocol: TCP
       name: pg-wire
-{{- end}}      
+{{- end}}{{if .Values.mysql.enabled}}
+    - port: {{ .Values.mysql.port }}
+      protocol: TCP
+      name: mysql
+{{- end}}
   selector:
     app: {{ .Chart.Name }}

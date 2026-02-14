@@ -17,6 +17,13 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      initContainers:
+        - name: init-dirs
+          image: busybox:latest
+          command: ['sh', '-c', 'mkdir -p /data/nats && chmod -R 777 /data']
+          volumeMounts:
+            - name: data
+              mountPath: /data
       containers:
         - name: {{ .Chart.Name }}          
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -26,6 +33,10 @@ spec:
               {{if .Values.pgwire.enabled}}
             - containerPort: 5432
               name: pg-wire
+              {{end}}
+              {{if .Values.mysql.enabled}}
+            - containerPort: {{ .Values.mysql.port }}
+              name: mysql
               {{end}}
               {{if .Values.nats.enabled}}
             - containerPort: 4222
@@ -63,6 +74,23 @@ spec:
                   key: pg_pass
           {{else}}
             - name: HA_PG_PORT
+              value: "0"
+          {{- end}}
+          {{- if .Values.mysql.enabled }}
+            - name: HA_MYSQL_PORT
+              value: {{ .Values.mysql.port | quote }}
+            - name: HA_MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ha.fullname" . }}-env-secret
+                  key: mysql_user
+            - name: HA_MYSQL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ha.fullname" . }}-env-secret
+                  key: mysql_pass
+          {{else}}
+            - name: HA_MYSQL_PORT
               value: "0"
           {{- end}}
           {{- if .Values.nats.enabled }}

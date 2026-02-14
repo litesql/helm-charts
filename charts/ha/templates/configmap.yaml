@@ -3,15 +3,15 @@ kind: ConfigMap
 metadata:
   name: ha-config  
 data:
-{{- if .Values.nats.enabled -}}
-  nats.conf: |  
+{{- if and .Values.nats.enabled .Values.nats.config }}
+  nats.conf: |
     {{- tpl .Values.nats.config . | indent 4 }}
 {{- end }}
-{{- if .Values.pgwire.cert -}}
+{{- if .Values.pgwire.cert }}
   pgwire.cert: |
     {{- .Values.pgwire.cert | indent 4 }}
 {{- end }}
-{{- if .Values.pgwire.key -}}
+{{- if .Values.pgwire.key }}
   pgwire.key: |
     {{- .Values.pgwire.key | indent 4 }}
 {{- end }}
