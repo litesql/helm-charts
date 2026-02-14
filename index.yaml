@@ -3,6 +3,17 @@ entries:
   ha:
   - apiVersion: v2
     appVersion: 0.0.14
+    created: "2026-02-14T00:58:26.421408082Z"
+    description: HA, a highly available leaderless SQLite cluster powered by embedded
+      NATS JetStream server
+    digest: 4fcf482f45a70dfad239abb8c4011e50b94d094329339c80c43098d1c9d02d39
+    name: ha
+    type: application
+    urls:
+    - https://github.com/litesql/helm-charts/releases/download/ha-0.1.5/ha-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.0.14
     created: "2025-10-28T00:14:07.354991254Z"
     description: HA, a highly available leaderless SQLite cluster powered by embedded
       NATS JetStream server
@@ -84,4 +95,4 @@ entries:
     urls:
     - https://github.com/litesql/helm-charts/releases/download/pocketbase-ha-0.0.1/pocketbase-ha-0.0.1.tgz
     version: 0.0.1
-generated: "2025-10-28T00:14:07.549663792Z"
+generated: "2026-02-14T00:58:26.421442456Z"
